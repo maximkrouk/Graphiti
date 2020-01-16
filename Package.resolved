@@ -12,11 +12,11 @@
       },
       {
         "package": "GraphQL",
-        "repositoryURL": "https://github.com/GraphQLSwift/GraphQL.git",
+        "repositoryURL": "https://github.com/alexsteinerde/GraphQL.git",
         "state": {
-          "branch": null,
-          "revision": "cba343ae0809fc407946f3538c7b80fc94bd5244",
-          "version": "0.11.0"
+          "branch": "master",
+          "revision": "be0d2940c1a91e8b6f4de091a27c12d0f513d83f",
+          "version": null
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/wickwirew/Runtime.git",
         "state": {
           "branch": null,
-          "revision": "c167476b07fe8cc65fdf064076a4081c3269d14a",
-          "version": "2.1.0"
+          "revision": "61c9776f47d2951bdc562486ad348e5e1ca2e180",
+          "version": "2.1.1"
         }
       },
       {
