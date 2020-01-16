@@ -28,9 +28,9 @@ class HelloWorldTests : XCTestCase {
     }
     
     let schema = Schema<API, APIContext> {
-        Query {
-            Field(.hello, at: API.hello)
-            Field(.asyncHello, at: API.asyncHello)
+        Query<API, APIContext> {
+            Field(API.FieldKey.hello, at: API.hello)
+            Field(API.FieldKey.asyncHello, at: API.asyncHello)
         }
     }
 
@@ -158,14 +158,14 @@ class HelloWorldTests : XCTestCase {
         }
 
         let schema = Schema<ScalarRoot, NoContext> {
-            Scalar(Float.self)
+            Scalar<ScalarRoot, NoContext, Float>(Float.self)
             .description("The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).")
-            
-            Scalar(ID.self)
 
-            Query {
-                Field(.float, at: ScalarRoot.float)
-                Field(.id, at: ScalarRoot.id)
+            Scalar<ScalarRoot, NoContext, ID>(ID.self)
+
+            Query<ScalarRoot, NoContext> {
+                Field(ScalarRoot.FieldKey.float, at: ScalarRoot.float)
+                Field(ScalarRoot.FieldKey.id, at: ScalarRoot.id)
             }
         }
 
@@ -278,22 +278,22 @@ class HelloWorldTests : XCTestCase {
         }
 
         let schema = Schema<FooRoot, NoContext> {
-            Type(Foo.self) {
-                Field(.id, at: \.id)
-                Field(.name, at: \.name)
+            Graphiti.Type<FooRoot, NoContext, Foo>(Foo.self) {
+                Graphiti.Field<Foo, Foo.FieldKey, NoContext, NoArguments, String, String>(Foo.FieldKey.id, at: \Foo.id)
+                Graphiti.Field<Foo, Foo.FieldKey, NoContext, NoArguments, Optional<String>, Optional<String>>(Foo.FieldKey.name, at: \Foo.name)
             }
 
-            Query {
-                Field(.foo, at: FooRoot.foo)
+            Query<FooRoot, NoContext> {
+                Field(FooRoot.FieldKey.foo, at: FooRoot.foo)
             }
 
-            Input(FooInput.self) {
-                InputField(.id, at: \.id)
-                InputField(.name, at: \.name)
+            Input<FooRoot, NoContext, FooInput>(FooInput.self) {
+                InputField<FooInput, FooInput.FieldKeys, NoContext, String>(FooInput.FieldKey.id, at: \.id)
+                InputField<FooInput, FooInput.FieldKeys, NoContext, Optional<String>>(FooInput.FieldKey.name, at: \.name)
             }
-            
-            Mutation {
-                Field(.addFoo, at: FooRoot.addFoo)
+
+            Mutation<FooRoot, NoContext> {
+                Field(FooRoot.FieldKey.addFoo, at: FooRoot.addFoo)
             }
         }
 
