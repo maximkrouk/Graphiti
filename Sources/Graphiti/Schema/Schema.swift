@@ -42,26 +42,74 @@ private final class MergerSchemaComponent<RootType : FieldKeyProvider, Context> 
         }
     }
 }
+//
+//@_functionBuilder
+//public struct SchemaBuilder<RootType : FieldKeyProvider, Context> {
+//    public static func buildBlock(_ components: SchemaComponent<RootType, Context>...) -> SchemaComponent<RootType, Context> {
+//        return MergerSchemaComponent(components: components)
+//    }
+//}
+//
+//public final class Schema<RootType : FieldKeyProvider, Context> {
+//    private let schema: GraphQLSchema
+//
+//    public init(@SchemaBuilder<RootType, Context> component: () -> SchemaComponent<RootType, Context>) {
+//        let component = component()
+//        let thingy = SchemaThingy()
+//        component.update(schema: thingy)
+//
+//        guard let query = thingy.query else {
+//            fatalError("Query type is required.")
+//        }
+//
+//        self.schema = try! GraphQLSchema(
+//            query: query,
+//            mutation: thingy.mutation,
+//            subscription: thingy.subscription,
+//            types: thingy.types,
+//            directives: thingy.directives
+//        )
+//    }
+//}
+//
+//extension Schema {
+//    public func execute(
+//        request: String,
+//        root: RootType,
+//        context: Context,
+//        eventLoopGroup: EventLoopGroup,
+//        variables: [String: Map] = [:],
+//        operationName: String? = nil
+//    ) -> Future<GraphQLResult> {
+//        do {
+//            return try graphql(
+//                schema: self.schema,
+//                request: request,
+//                rootValue: root,
+//                context: context,
+//                eventLoopGroup: eventLoopGroup,
+//                variableValues: variables,
+//                operationName: operationName
+//            )
+//        } catch {
+//            return eventLoopGroup.next().newFailedFuture(error: error)
+//        }
+//    }
+//}
 
-@_functionBuilder
-public struct SchemaBuilder<RootType : FieldKeyProvider, Context> {
-    public static func buildBlock(_ components: SchemaComponent<RootType, Context>...) -> SchemaComponent<RootType, Context> {
-        return MergerSchemaComponent(components: components)
-    }
-}
 
-public final class Schema<RootType : FieldKeyProvider, Context> {
-    private let schema: GraphQLSchema
+public class Schema<Root: FieldKeyProvider, Context> {
+    public var schema: GraphQLSchema
 
-    public init(@SchemaBuilder<RootType, Context> component: () -> SchemaComponent<RootType, Context>) {
-        let component = component()
+    public init(_ component: [SchemaComponent<Root, Context>]) {
+        let component = MergerSchemaComponent(components: component)
         let thingy = SchemaThingy()
         component.update(schema: thingy)
-        
+
         guard let query = thingy.query else {
             fatalError("Query type is required.")
         }
-        
+
         self.schema = try! GraphQLSchema(
             query: query,
             mutation: thingy.mutation,
@@ -75,7 +123,7 @@ public final class Schema<RootType : FieldKeyProvider, Context> {
 extension Schema {
     public func execute(
         request: String,
-        root: RootType,
+        root: Root,
         context: Context,
         eventLoopGroup: EventLoopGroup,
         variables: [String: Map] = [:],

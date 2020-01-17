@@ -674,17 +674,17 @@ class StarWarsQueryTests : XCTestCase {
             }
         }
 
-        let schema = Schema<Root, NoContext> {
-            Graphiti.Type<Root, NoContext, A>(A.self) {
-                Graphiti.Field<A, A.FieldKey, NoContext, NoArguments, TypeReference<A>?, A?>(.nullableA, at: A.nullableA, overridingType: (TypeReference<A>?).self)
-                Graphiti.Field<A, A.FieldKey, NoContext, NoArguments, TypeReference<A>, A>(.nonNullA, at: A.nonNullA, overridingType: TypeReference<A>.self)
-                Graphiti.Field<A, A.FieldKey, NoContext, NoArguments, String, String>(.throws, at: A.throws)
-            }
+        let schema = Schema<Root, NoContext>([
+            Type(A.self, fields: [
+                Field(.nullableA, at: A.nullableA, overridingType: (TypeReference<A>?).self),
+                Field(.nonNullA, at: A.nonNullA, overridingType: TypeReference<A>.self),
+                Field(.throws, at: A.throws),
+            ]),
 
-            Query<Root, NoContext> {
+            Query {
                 Field(.nullableA, at: Root.nullableA)
-            }
-        }
+            },
+        ])
 
         let query = "query {\n" +
                     "    nullableA {\n" +

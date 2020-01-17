@@ -27,12 +27,12 @@ class HelloWorldTests : XCTestCase {
         }
     }
     
-    let schema = Schema<API, APIContext> {
-        Query<API, APIContext> {
+    let schema = Schema<API, APIContext>([
+        Query {
             Field(API.FieldKey.hello, at: API.hello)
             Field(API.FieldKey.asyncHello, at: API.asyncHello)
         }
-    }
+    ])
 
     func testHello() throws {
         let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: 1)
@@ -157,17 +157,17 @@ class HelloWorldTests : XCTestCase {
             }
         }
 
-        let schema = Schema<ScalarRoot, NoContext> {
-            Scalar<ScalarRoot, NoContext, Float>(Float.self)
-            .description("The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).")
+        let schema = Schema<ScalarRoot, NoContext>([
+            Scalar(Float.self)
+            .description("The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point)."),
 
-            Scalar<ScalarRoot, NoContext, ID>(ID.self)
+            Scalar(ID.self),
 
-            Query<ScalarRoot, NoContext> {
+            Query {
                 Field(ScalarRoot.FieldKey.float, at: ScalarRoot.float)
                 Field(ScalarRoot.FieldKey.id, at: ScalarRoot.id)
             }
-        }
+        ])
 
         var query: String
         var expected = GraphQLResult(data: ["float": 4.0])
@@ -277,25 +277,25 @@ class HelloWorldTests : XCTestCase {
             }
         }
 
-        let schema = Schema<FooRoot, NoContext> {
-            Graphiti.Type<FooRoot, NoContext, Foo>(Foo.self) {
-                Graphiti.Field<Foo, Foo.FieldKey, NoContext, NoArguments, String, String>(Foo.FieldKey.id, at: \Foo.id)
-                Graphiti.Field<Foo, Foo.FieldKey, NoContext, NoArguments, Optional<String>, Optional<String>>(Foo.FieldKey.name, at: \Foo.name)
-            }
+        let schema = Schema<FooRoot, NoContext>([
+            Type(Foo.self, fields: [
+                Graphiti.Field(Foo.FieldKey.id, at: \Foo.id),
+                Graphiti.Field(Foo.FieldKey.name, at: \Foo.name)
+            ]),
 
-            Query<FooRoot, NoContext> {
+            Query {
                 Field(FooRoot.FieldKey.foo, at: FooRoot.foo)
-            }
+            },
 
-            Input<FooRoot, NoContext, FooInput>(FooInput.self) {
-                InputField<FooInput, FooInput.FieldKeys, NoContext, String>(FooInput.FieldKey.id, at: \.id)
-                InputField<FooInput, FooInput.FieldKeys, NoContext, Optional<String>>(FooInput.FieldKey.name, at: \.name)
-            }
+            Input(FooInput.self, [
+                InputField(FooInput.FieldKey.id, at: \.id),
+                InputField(FooInput.FieldKey.name, at: \.name)
+            ]),
 
-            Mutation<FooRoot, NoContext> {
+            Mutation {
                 Field(FooRoot.FieldKey.addFoo, at: FooRoot.addFoo)
-            }
-        }
+            },
+        ])
 
         let mutation = "mutation addFoo($input: FooInput!) { addFoo(input:$input) { id, name } }"
         let variables: [String: Map] = ["input" : [ "id" : "123", "name" : "bob" ]]

@@ -15,7 +15,7 @@ public class ObjectTypeComponent<ObjectType, FieldKey : RawRepresentable, Contex
     }
 }
 
-private class MergerObjectTypeComponent<ObjectType, FieldKey : RawRepresentable, Context> : ObjectTypeComponent<ObjectType, FieldKey, Context> where FieldKey.RawValue == String {
+internal class MergerObjectTypeComponent<ObjectType, FieldKey : RawRepresentable, Context> : ObjectTypeComponent<ObjectType, FieldKey, Context> where FieldKey.RawValue == String {
     let components: [ObjectTypeComponent<ObjectType, FieldKey, Context>]
     
     init(components: [ObjectTypeComponent<ObjectType, FieldKey, Context>]) {
@@ -41,11 +41,42 @@ public struct ObjectTypeBuilder<ObjectType, FieldKey : RawRepresentable, Context
     }
 }
 
-public final class Type<RootType : FieldKeyProvider, Context, ObjectType : Encodable & FieldKeyProvider> : SchemaComponent<RootType, Context> {
+//public final class Type<RootType : FieldKeyProvider, Context, ObjectType : Encodable & FieldKeyProvider> : SchemaComponent<RootType, Context> {
+//    let name: String?
+//    let interfaces: [Any.Type]
+//    let component: ObjectTypeComponent<ObjectType, ObjectType.FieldKey, Context>
+//
+//    override func update(schema: SchemaThingy) {
+//        let objectType = try! GraphQLObjectType(
+//            name: self.name ?? fixName(String(describing: ObjectType.self)),
+//            description: self.description,
+//            fields: self.component.fields(provider: schema),
+//            interfaces: self.interfaces.map {
+//                try! schema.getInterfaceType(from: $0)
+//            },
+//            isTypeOf: self.component.isTypeOf
+//        )
+//
+//        try! schema.map(ObjectType.self, to: objectType)
+//    }
+//
+//    public init(
+//        _ type: ObjectType.Type,
+//        name: String? = nil,
+//        interfaces: Any.Type...,
+//        @ObjectTypeBuilder<ObjectType, ObjectType.FieldKey, Context> component: () -> ObjectTypeComponent<ObjectType, ObjectType.FieldKey, Context>
+//    ) {
+//        self.name = name
+//        self.interfaces = interfaces
+//        self.component = component()
+//    }
+//}
+
+public class Type<Root: FieldKeyProvider, Context, ObjectType: Encodable & FieldKeyProvider> : SchemaComponent<Root, Context> {
     let name: String?
     let interfaces: [Any.Type]
     let component: ObjectTypeComponent<ObjectType, ObjectType.FieldKey, Context>
-    
+
     override func update(schema: SchemaThingy) {
         let objectType = try! GraphQLObjectType(
             name: self.name ?? fixName(String(describing: ObjectType.self)),
@@ -56,18 +87,18 @@ public final class Type<RootType : FieldKeyProvider, Context, ObjectType : Encod
             },
             isTypeOf: self.component.isTypeOf
         )
-        
+
         try! schema.map(ObjectType.self, to: objectType)
     }
-    
+
     public init(
         _ type: ObjectType.Type,
         name: String? = nil,
         interfaces: Any.Type...,
-        @ObjectTypeBuilder<ObjectType, ObjectType.FieldKey, Context> component: () -> ObjectTypeComponent<ObjectType, ObjectType.FieldKey, Context>
+        fields components: [ObjectTypeComponent<ObjectType, ObjectType.FieldKey, Context>]
     ) {
         self.name = name
         self.interfaces = interfaces
-        self.component = component()
+        self.component = MergerObjectTypeComponent(components: components)
     }
 }
