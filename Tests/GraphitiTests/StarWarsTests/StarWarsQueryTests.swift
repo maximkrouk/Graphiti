@@ -681,9 +681,9 @@ class StarWarsQueryTests : XCTestCase {
                 Field(.throws, at: A.throws),
             ]),
 
-            Query {
-                Field(.nullableA, at: Root.nullableA)
-            },
+            Query([
+                Field(.nullableA, at: Root.nullableA),
+            ]),
         ])
 
         let query = "query {\n" +

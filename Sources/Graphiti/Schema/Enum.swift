@@ -52,35 +52,62 @@ private final class MergerValue<EnumType : Encodable & RawRepresentable> : Value
         }
     }
 }
-
-@_functionBuilder
-public struct EnumTypeBuilder<EnumType : Encodable & RawRepresentable> where EnumType.RawValue == String {
-    public static func buildBlock(_ components: ValueComponent<EnumType>...) -> ValueComponent<EnumType> {
-        return MergerValue(components: components)
-    }
-}
+//
+//@_functionBuilder
+//public struct EnumTypeBuilder<EnumType : Encodable & RawRepresentable> where EnumType.RawValue == String {
+//    public static func buildBlock(_ components: ValueComponent<EnumType>...) -> ValueComponent<EnumType> {
+//        return MergerValue(components: components)
+//    }
+//}
+//
+//public final class Enum<RootType : FieldKeyProvider, Context, EnumType : Encodable & RawRepresentable> : SchemaComponent<RootType, Context> where EnumType.RawValue == String {
+//    private let name: String?
+//    private let values: GraphQLEnumValueMap
+//
+//    override func update(schema: SchemaThingy) {
+//        let enumType = try! GraphQLEnumType(
+//            name: self.name ?? fixName(String(describing: EnumType.self)),
+//            description: self.description,
+//            values: self.values
+//        )
+//
+//        try! schema.map(EnumType.self, to: enumType)
+//    }
+//
+//    public init(
+//        _ type: EnumType.Type,
+//        name: String? = nil,
+//        @EnumTypeBuilder<EnumType> component: () -> ValueComponent<EnumType>
+//    ) {
+//        self.name = name
+//        let component = component()
+//        let `enum` = EnumThingy()
+//        component.update(enum: `enum`)
+//        self.values = `enum`.values
+//    }
+//}
 
 public final class Enum<RootType : FieldKeyProvider, Context, EnumType : Encodable & RawRepresentable> : SchemaComponent<RootType, Context> where EnumType.RawValue == String {
     private let name: String?
     private let values: GraphQLEnumValueMap
-    
+
     override func update(schema: SchemaThingy) {
         let enumType = try! GraphQLEnumType(
             name: self.name ?? fixName(String(describing: EnumType.self)),
             description: self.description,
             values: self.values
         )
-        
+
         try! schema.map(EnumType.self, to: enumType)
     }
-    
+
     public init(
         _ type: EnumType.Type,
         name: String? = nil,
-        @EnumTypeBuilder<EnumType> component: () -> ValueComponent<EnumType>
+        _ values: [ValueComponent<EnumType>]
     ) {
         self.name = name
-        let component = component()
+        let component = MergerValue(components: values)
         let `enum` = EnumThingy()
         component.update(enum: `enum`)
         self.values = `enum`.values

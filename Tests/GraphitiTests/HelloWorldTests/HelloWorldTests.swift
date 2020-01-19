@@ -28,10 +28,10 @@ class HelloWorldTests : XCTestCase {
     }
     
     let schema = Schema<API, APIContext>([
-        Query {
-            Field(API.FieldKey.hello, at: API.hello)
-            Field(API.FieldKey.asyncHello, at: API.asyncHello)
-        }
+        Query([
+            Field(.hello, at: API.hello),
+            Field(.asyncHello, at: API.asyncHello),
+        ])
     ])
 
     func testHello() throws {
@@ -163,10 +163,10 @@ class HelloWorldTests : XCTestCase {
 
             Scalar(ID.self),
 
-            Query {
-                Field(ScalarRoot.FieldKey.float, at: ScalarRoot.float)
-                Field(ScalarRoot.FieldKey.id, at: ScalarRoot.id)
-            }
+            Query([
+                Field(.float, at: ScalarRoot.float),
+                Field(.id, at: ScalarRoot.id),
+            ])
         ])
 
         var query: String
@@ -279,22 +279,22 @@ class HelloWorldTests : XCTestCase {
 
         let schema = Schema<FooRoot, NoContext>([
             Type(Foo.self, fields: [
-                Graphiti.Field(Foo.FieldKey.id, at: \Foo.id),
-                Graphiti.Field(Foo.FieldKey.name, at: \Foo.name)
+                Graphiti.Field(.id, at: \Foo.id),
+                Graphiti.Field(.name, at: \Foo.name)
             ]),
 
-            Query {
-                Field(FooRoot.FieldKey.foo, at: FooRoot.foo)
-            },
+            Query([
+                Field(.foo, at: FooRoot.foo),
+            ]),
 
             Input(FooInput.self, [
-                InputField(FooInput.FieldKey.id, at: \.id),
-                InputField(FooInput.FieldKey.name, at: \.name)
+                InputField(.id, at: \.id),
+                InputField(.name, at: \.name)
             ]),
 
-            Mutation {
-                Field(FooRoot.FieldKey.addFoo, at: FooRoot.addFoo)
-            },
+            Mutation([
+                Field(.addFoo, at: FooRoot.addFoo),
+            ]),
         ])
 
         let mutation = "mutation addFoo($input: FooInput!) { addFoo(input:$input) { id, name } }"

@@ -34,12 +34,12 @@ internal class MergerObjectTypeComponent<ObjectType, FieldKey : RawRepresentable
     }
 }
 
-@_functionBuilder
-public struct ObjectTypeBuilder<ObjectType, FieldKey : RawRepresentable, Context> where FieldKey.RawValue == String {
-    public static func buildBlock(_ components: ObjectTypeComponent<ObjectType, FieldKey, Context>...) -> ObjectTypeComponent<ObjectType, FieldKey, Context> {
-        return MergerObjectTypeComponent(components: components)
-    }
-}
+//@_functionBuilder
+//public struct ObjectTypeBuilder<ObjectType, FieldKey : RawRepresentable, Context> where FieldKey.RawValue == String {
+//    public static func buildBlock(_ components: ObjectTypeComponent<ObjectType, FieldKey, Context>...) -> ObjectTypeComponent<ObjectType, FieldKey, Context> {
+//        return MergerObjectTypeComponent(components: components)
+//    }
+//}
 
 //public final class Type<RootType : FieldKeyProvider, Context, ObjectType : Encodable & FieldKeyProvider> : SchemaComponent<RootType, Context> {
 //    let name: String?
