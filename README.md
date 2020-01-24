@@ -2,12 +2,12 @@
 
 Graphiti is a Swift library for building GraphQL schemas/types fast, safely and easily.
 
-[![Swift][swift-badge]][swift-url]
-[![License][mit-badge]][mit-url]
-[![Slack][slack-badge]][slack-url]
-[![Travis][travis-badge]][travis-url]
-[![Codecov][codecov-badge]][codecov-url]
-[![Codebeat][codebeat-badge]][codebeat-url]
+[![Swift](https://img.shields.io/badge/Swift-5.1-orange.svg?style=flat)](https://swift.org)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://tldrlegal.com/license/mit-license)
+[![Slack](https://zewo-slackin.herokuapp.com/badge.svg)](http://slack.zewo.io)
+[![CircleCI](https://circleci.com/gh/alexsteinerde/Graphiti.svg?style=shield)](https://circleci.com/gh/alexsteinerde/Graphiti)
+[![Codecov](https://codecov.io/gh/GraphQLSwift/Graphiti/branch/master/graph/badge.svg)](https://codecov.io/gh/GraphQLSwift/Graphiti)
+[![Codebeat](https://codebeat.co/badges/df113480-6e62-43e0-8c9d-4571c4307e19)](https://codebeat.co/projects/github-com-graphqlswift-graphiti)
 
 Looking for help? Find resources [from the community](http://graphql.org/community/) or in the [Vapor Discord GraphQL channel](http://vapor.team).
 
@@ -597,17 +597,3 @@ struct API : FieldKeyProvider {
 ## License
 
 This project is released under the MIT license. See [LICENSE](LICENSE) for details.
-
-[swift-badge]: https://img.shields.io/badge/Swift-5.1-orange.svg?style=flat
-[swift-url]: https://swift.org
-[mit-badge]: https://img.shields.io/badge/License-MIT-blue.svg?style=flat
-[mit-url]: https://tldrlegal.com/license/mit-license
-[slack-image]: http://s13.postimg.org/ybwy92ktf/Slack.png
-[slack-badge]: https://zewo-slackin.herokuapp.com/badge.svg
-[slack-url]: http://slack.zewo.io
-[travis-badge]: https://travis-ci.org/GraphQLSwift/Graphiti.svg?branch=master
-[travis-url]: https://travis-ci.org/GraphQLSwift/Graphiti
-[codecov-badge]: https://codecov.io/gh/GraphQLSwift/Graphiti/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/GraphQLSwift/Graphiti
-[codebeat-badge]: https://codebeat.co/badges/df113480-6e62-43e0-8c9d-4571c4307e19
-[codebeat-url]: https://codebeat.co/projects/github-com-graphqlswift-graphiti
