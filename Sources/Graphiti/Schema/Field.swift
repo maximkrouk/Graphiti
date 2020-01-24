@@ -81,8 +81,8 @@ public class Field<ObjectType, FieldKey : RawRepresentable, Context, Arguments :
         return self
     }
     
-    public func argument<Argument>(_ name: FieldKey, at keyPath: KeyPath<Arguments, Argument>, description: String) -> Self {
-        self.argumentsDescriptions[name.rawValue] = description
+    public func argument<Argument>(_ name: FieldKey, at keyPath: KeyPath<Arguments, Argument>, description: String?=nil) -> Self {
+        description.map({ self.argumentsDescriptions[name.rawValue] = $0 })
         return self
     }
     
@@ -91,7 +91,7 @@ public class Field<ObjectType, FieldKey : RawRepresentable, Context, Arguments :
         return self
     }
     
-    init(
+    public init(
         name: String,
         resolve: @escaping GraphQLFieldResolve
     ) {
@@ -101,7 +101,7 @@ public class Field<ObjectType, FieldKey : RawRepresentable, Context, Arguments :
 }
 
 extension Field {
-    convenience init(
+    public convenience init(
         name: String,
         at function: @escaping AsyncResolve<ObjectType, Context, Arguments, ResolveType>
     ) {
@@ -124,7 +124,7 @@ extension Field {
         self.init(name: name, resolve: resolve)
     }
     
-    convenience init(
+    public convenience init(
         name: String,
         at function: @escaping SyncResolve<ObjectType, Context, Arguments, ResolveType>
     ) {
@@ -161,7 +161,14 @@ extension Field where Arguments == NoArguments, FieldType == ResolveType {
         _ name: FieldKey,
         at keyPath: KeyPath<ObjectType, ResolveType>
     ) {
-        self.init(name: name.rawValue) { (type: ObjectType) in
+        self.init(name.rawValue, at: keyPath)
+    }
+
+    public convenience init(
+        _ name: String,
+        at keyPath: KeyPath<ObjectType, ResolveType>
+    ) {
+        self.init(name: name) { (type: ObjectType) in
             return { (context: Context, arguments: Arguments) in
                 return type[keyPath: keyPath]
             }
