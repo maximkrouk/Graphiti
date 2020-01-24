@@ -6,7 +6,8 @@ jobs:
       - image: swift:latest
     steps:
       - checkout
-      - run: apt-get -qq update && apt-get -q -y install libpq-dev libssl-dev zlib1g-dev postgresql postgresql-client postgresql-contrib
+      - run: apt-get -qq update
+      - run: apt-get -q -y install libpq-dev libssl-dev zlib1g-de
       - run:
           name: Compile code
           command: swift build
@@ -19,7 +20,8 @@ jobs:
       - image: swift:latest
     steps:
       - checkout
-      - run: apt-get -qq update && apt-get -q -y install libpq-dev libssl-dev zlib1g-dev postgresql postgresql-client postgresql-contrib
+      - run: apt-get -qq update
+      - run: apt-get -q -y install libpq-dev libssl-dev zlib1g-de
       - run:
           name: Compile code with optimizations
           command: swift build -c release
