@@ -14,9 +14,9 @@
         "package": "GraphQL",
         "repositoryURL": "https://github.com/alexsteinerde/GraphQL.git",
         "state": {
-          "branch": "master",
+          "branch": null,
           "revision": "be0d2940c1a91e8b6f4de091a27c12d0f513d83f",
-          "version": null
+          "version": "0.12.1"
         }
       },
       {
