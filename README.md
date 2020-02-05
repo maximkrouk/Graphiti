@@ -5,7 +5,7 @@ Graphiti is a Swift library for building GraphQL schemas/types fast, safely and 
 [![Swift](https://img.shields.io/badge/Swift-5.1-orange.svg?style=flat)](https://swift.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://tldrlegal.com/license/mit-license)
 [![Slack](https://zewo-slackin.herokuapp.com/badge.svg)](http://slack.zewo.io)
-[![CircleCI](https://circleci.com/gh/alexsteinerde/Graphiti.svg?style=shield)](https://circleci.com/gh/alexsteinerde/Graphiti)
+![build](https://github.com/alexsteinerde/Graphiti/workflows/build/badge.svg)
 [![Codecov](https://codecov.io/gh/GraphQLSwift/Graphiti/branch/master/graph/badge.svg)](https://codecov.io/gh/GraphQLSwift/Graphiti)
 [![Codebeat](https://codebeat.co/badges/df113480-6e62-43e0-8c9d-4571c4307e19)](https://codebeat.co/projects/github-com-graphqlswift-graphiti)
 
