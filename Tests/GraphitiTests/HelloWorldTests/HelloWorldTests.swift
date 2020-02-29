@@ -23,7 +23,7 @@ class HelloWorldTests : XCTestCase {
         }
         
         func asyncHello(context: APIContext, arguments: NoArguments, eventLoopGroup: EventLoopGroup) -> EventLoopFuture<String> {
-            eventLoopGroup.next().newSucceededFuture(result: context.hello())
+            eventLoopGroup.next().makeSucceededFuture(context.hello())
         }
     }
     
@@ -325,6 +325,7 @@ extension HelloWorldTests {
     static var allTests: [(String, (HelloWorldTests) -> () throws -> Void)] {
         return [
             ("testHello", testHello),
+            ("testHelloAsync", testHelloAsync),
             ("testBoyhowdy", testBoyhowdy),
         ]
     }

@@ -132,7 +132,7 @@ extension Field {
         let function: AsyncResolve<ObjectType, Context, Arguments, ResolveType> = { type in
             return { context, arguments, eventLoopGroup in
                 let result = try function(type)(context, arguments)
-                return eventLoopGroup.next().newSucceededFuture(result: result)
+                return eventLoopGroup.next().makeSucceededFuture(result)
             }
         }
         
