@@ -1,3 +1,5 @@
+import Foundation
+
 enum Episode : String, Codable {
     case newHope = "NEWHOPE"
     case empire = "EMPIRE"
@@ -5,9 +7,9 @@ enum Episode : String, Codable {
 }
 
 protocol Character : Codable {
-    var id: String { get }
+    var id: UUID { get }
     var name: String { get }
-    var friends: [String] { get }
+    var friends: [UUID] { get }
     var appearsIn: [Episode] { get }
 }
 
@@ -21,17 +23,17 @@ struct Planet : Codable {
 }
 
 struct Human : Character {
-    let id: String
+    let id: UUID
     let name: String
-    let friends: [String]
+    let friends: [UUID]
     let appearsIn: [Episode]
     let homePlanet: Planet
 }
 
 struct Droid : Character {
-    let id: String
+    let id: UUID
     let name: String
-    let friends: [String]
+    let friends: [UUID]
     let appearsIn: [Episode]
     let primaryFunction: String
 }

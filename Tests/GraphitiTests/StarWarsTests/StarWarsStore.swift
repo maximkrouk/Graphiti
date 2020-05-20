@@ -1,3 +1,4 @@
+import Foundation
 /**
  * This defines a basic set of data for our Star Wars Schema.
  *
@@ -30,78 +31,101 @@ final class StarWarsStore {
     ]
     
     lazy var luke = Human(
-        id: "1000",
+        id: UUID(uuidString: "B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C")!,
         name: "Luke Skywalker",
-        friends: ["1002", "1003", "2000", "2001"],
+        friends: [
+            UUID(uuidString: "0511AC38-E359-43AA-827F-9666279BD280")!,
+            UUID(uuidString: "ECA47EF3-022B-4398-9E20-EC64594C3BAE")!,
+            UUID(uuidString: "35A0D0AF-98B9-4BA8-A12B-D24D7BD078F9")!,
+            UUID(uuidString: "5F3F16DE-B5BC-49B9-B280-313171F71E47")!
+        ],
         appearsIn: [.newHope, .empire, .jedi],
         homePlanet: tatooine
     )
     
     lazy var vader = Human(
-        id: "1001",
+        id: UUID(uuidString: "E6FA5B00-304E-4D9A-A36B-C23E87F2C0A5")!,
         name: "Darth Vader",
-        friends: [ "1004" ],
+        friends: [ UUID(uuidString: "5767F52A-130A-4D3B-A3AE-03757683BD82")! ],
         appearsIn: [.newHope, .empire, .jedi],
         homePlanet: tatooine
     )
     
     lazy var han = Human(
-        id: "1002",
+        id: UUID(uuidString: "0511AC38-E359-43AA-827F-9666279BD280")!,
         name: "Han Solo",
-        friends: ["1000", "1003", "2001"],
+        friends: [
+            UUID(uuidString: "B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C")!,
+            UUID(uuidString: "ECA47EF3-022B-4398-9E20-EC64594C3BAE")!,
+            UUID(uuidString: "5F3F16DE-B5BC-49B9-B280-313171F71E47")!
+        ],
         appearsIn: [.newHope, .empire, .jedi],
         homePlanet: alderaan
     )
     
     lazy var leia = Human(
-        id: "1003",
+        id: UUID(uuidString: "ECA47EF3-022B-4398-9E20-EC64594C3BAE")!,
         name: "Leia Organa",
-        friends: ["1000", "1002", "2000", "2001"],
+        friends: [
+            UUID(uuidString: "B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C")!,
+            UUID(uuidString: "0511AC38-E359-43AA-827F-9666279BD280")!,
+            UUID(uuidString: "35A0D0AF-98B9-4BA8-A12B-D24D7BD078F9")!,
+            UUID(uuidString: "5F3F16DE-B5BC-49B9-B280-313171F71E47")!
+        ],
         appearsIn: [.newHope, .empire, .jedi],
         homePlanet: alderaan
     )
     
     lazy var tarkin = Human(
-        id: "1004",
+        id: UUID(uuidString: "5767F52A-130A-4D3B-A3AE-03757683BD82")!,
         name: "Wilhuff Tarkin",
-        friends: ["1001"],
+        friends: [UUID(uuidString: "E6FA5B00-304E-4D9A-A36B-C23E87F2C0A5")!],
         appearsIn: [.newHope],
         homePlanet: alderaan
     )
     
-    lazy var humanData: [String: Human] = [
-        "1000": luke,
-        "1001": vader,
-        "1002": han,
-        "1003": leia,
-        "1004": tarkin,
+    lazy var humanData: [UUID: Human] = [
+        UUID(uuidString: "B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C")!: luke,
+        UUID(uuidString: "E6FA5B00-304E-4D9A-A36B-C23E87F2C0A5")!: vader,
+        UUID(uuidString: "0511AC38-E359-43AA-827F-9666279BD280")!: han,
+        UUID(uuidString: "ECA47EF3-022B-4398-9E20-EC64594C3BAE")!: leia,
+        UUID(uuidString: "5767F52A-130A-4D3B-A3AE-03757683BD82")!: tarkin,
     ]
     
     lazy var c3po = Droid(
-        id: "2000",
+        id: UUID(uuidString: "35A0D0AF-98B9-4BA8-A12B-D24D7BD078F9")!,
         name: "C-3PO",
-        friends: ["1000", "1002", "1003", "2001"],
+        friends: [
+            UUID(uuidString: "B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C")!,
+            UUID(uuidString: "0511AC38-E359-43AA-827F-9666279BD280")!,
+            UUID(uuidString: "ECA47EF3-022B-4398-9E20-EC64594C3BAE")!,
+            UUID(uuidString: "5F3F16DE-B5BC-49B9-B280-313171F71E47")!
+        ],
         appearsIn: [.newHope, .empire, .jedi],
         primaryFunction: "Protocol"
     )
     
     lazy var r2d2 = Droid(
-        id: "2001",
+        id: UUID(uuidString: "5F3F16DE-B5BC-49B9-B280-313171F71E47")!,
         name: "R2-D2",
-        friends: [ "1000", "1002", "1003" ],
+        friends: [
+            UUID(uuidString: "B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C")!,
+            UUID(uuidString: "0511AC38-E359-43AA-827F-9666279BD280")!,
+            UUID(uuidString: "ECA47EF3-022B-4398-9E20-EC64594C3BAE")!
+        ],
         appearsIn: [.newHope, .empire, .jedi],
         primaryFunction: "Astromech"
     )
     
-    lazy var droidData: [String: Droid] = [
-        "2000": c3po,
-        "2001": r2d2,
+    lazy var droidData: [UUID: Droid] = [
+        UUID(uuidString: "35A0D0AF-98B9-4BA8-A12B-D24D7BD078F9")!: c3po,
+        UUID(uuidString: "5F3F16DE-B5BC-49B9-B280-313171F71E47")!: r2d2,
     ]
     
     /**
      * Helper function to get a character by ID.
      */
-    func getCharacter(id: String) -> Character? {
+    func getCharacter(id: UUID) -> Character? {
         humanData[id] ?? droidData[id]
     }
     
@@ -129,14 +153,14 @@ final class StarWarsStore {
     /**
      * Allows us to query for the human with the given id.
      */
-    func getHuman(id: String) -> Human? {
+    func getHuman(id: UUID) -> Human? {
         humanData[id]
     }
     
     /**
      * Allows us to query for the droid with the given id.
      */
-    func getDroid(id: String) -> Droid? {
+    func getDroid(id: UUID) -> Droid? {
         droidData[id]
     }
     
@@ -166,7 +190,6 @@ final class StarWarsStore {
      */
     func getHumans(query: String) -> [Human] {
         humanData
-            .sorted(by: { $0.key < $1.key })
             .map({ $1 })
             .filter({ $0.name.lowercased().contains(query.lowercased()) })
     }
@@ -176,7 +199,6 @@ final class StarWarsStore {
      */
     func getDroids(query: String) -> [Droid] {
         droidData
-            .sorted(by: { $0.key < $1.key })
             .map({ $1 })
             .filter({ $0.name.lowercased().contains(query.lowercased()) })
     }

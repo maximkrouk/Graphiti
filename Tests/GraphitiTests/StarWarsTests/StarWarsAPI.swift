@@ -1,4 +1,5 @@
 import Graphiti
+import Foundation
 
 extension Character {
     var secretBackstory: String? {
@@ -91,7 +92,7 @@ struct StarWarsAPI : FieldKeyProvider {
     }
 
     struct HumanArguments : Codable {
-        let id: String
+        let id: UUID
     }
     
     func getHuman(store: StarWarsStore, arguments: HumanArguments) -> Human? {
@@ -99,7 +100,7 @@ struct StarWarsAPI : FieldKeyProvider {
     }
 
     struct DroidArguments : Codable {
-        let id: String
+        let id: UUID
     }
 
     func getDroid(store: StarWarsStore, arguments: DroidArguments) -> Droid? {

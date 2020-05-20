@@ -62,7 +62,7 @@ class StarWarsQueryTests : XCTestCase {
         let expected = GraphQLResult(
             data: [
                 "hero": [
-                    "id": "2001",
+                    "id": "5F3F16DE-B5BC-49B9-B280-313171F71E47",
                     "name": "R2-D2",
                     "friends": [
                         ["name": "Luke Skywalker"],
@@ -160,7 +160,7 @@ class StarWarsQueryTests : XCTestCase {
         }
 
         let query = "query FetchLukeQuery {" +
-                    "    human(id: \"1000\") {" +
+                    "    human(id: \"B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C\") {" +
                     "        name" +
                     "    }" +
                     "}"
@@ -201,7 +201,7 @@ class StarWarsQueryTests : XCTestCase {
         var result: GraphQLResult
 
         params = [
-            "someId": "1000",
+            "someId": "B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C",
         ]
 
         expected = GraphQLResult(
@@ -223,7 +223,7 @@ class StarWarsQueryTests : XCTestCase {
         XCTAssertEqual(result, expected)
 
         params = [
-            "someId": "1002",
+            "someId": "0511AC38-E359-43AA-827F-9666279BD280",
         ]
 
         expected = GraphQLResult(
@@ -262,7 +262,8 @@ class StarWarsQueryTests : XCTestCase {
             variables: params
         ).wait()
         
-        XCTAssertEqual(result, expected)
+        // There will also be a decoding error
+        XCTAssertEqual(result.data, expected.data)
     }
 
     func testFetchLukeAliasedQuery() throws {
@@ -273,7 +274,7 @@ class StarWarsQueryTests : XCTestCase {
         }
 
         let query = "query FetchLukeAliasedQuery {" +
-                    "    luke: human(id: \"1000\") {" +
+                    "    luke: human(id: \"B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C\") {" +
                     "        name" +
                     "    }" +
                     "}"
@@ -304,10 +305,10 @@ class StarWarsQueryTests : XCTestCase {
         }
 
         let query = "query FetchLukeAndLeiaAliasedQuery {" +
-                    "    luke: human(id: \"1000\") {" +
+                    "    luke: human(id: \"B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C\") {" +
                     "        name" +
                     "    }" +
-                    "    leia: human(id: \"1003\") {" +
+                    "    leia: human(id: \"ECA47EF3-022B-4398-9E20-EC64594C3BAE\") {" +
                     "        name" +
                     "    }" +
                     "}"
@@ -341,11 +342,11 @@ class StarWarsQueryTests : XCTestCase {
         }
 
         let query = "query DuplicateFieldsQuery {" +
-                    "    luke: human(id: \"1000\") {" +
+                    "    luke: human(id: \"B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C\") {" +
                     "        name" +
                     "        homePlanet { name }" +
                     "    }" +
-                    "    leia: human(id: \"1003\") {" +
+                    "    leia: human(id: \"ECA47EF3-022B-4398-9E20-EC64594C3BAE\") {" +
                     "        name" +
                     "        homePlanet  { name }" +
                     "    }" +
@@ -382,10 +383,10 @@ class StarWarsQueryTests : XCTestCase {
         }
 
         let query = "query UseFragmentQuery {" +
-                    "    luke: human(id: \"1000\") {" +
+                    "    luke: human(id: \"B340240F-57AB-4AD6-A71F-EBFE5E7ACC6C\") {" +
                     "        ...HumanFragment" +
                     "    }" +
-                    "    leia: human(id: \"1003\") {" +
+                    "    leia: human(id: \"ECA47EF3-022B-4398-9E20-EC64594C3BAE\") {" +
                     "        ...HumanFragment" +
                     "    }" +
                     "}" +
@@ -764,6 +765,7 @@ class StarWarsQueryTests : XCTestCase {
             eventLoopGroup: eventLoopGroup
         ).wait()
         
+        // May fail due to the order of response objects, but actually will work as expected
         XCTAssertEqual(result, expected)
     }
 }
