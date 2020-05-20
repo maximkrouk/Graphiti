@@ -4,7 +4,7 @@ import NIO
 
 public typealias NoContext = Void
 
-public class SchemaComponent<RootType : FieldKeyProvider, Context> : Descriptable {
+public class SchemaComponent<Resolver : FieldKeyProvider, Context> : Descriptable {
     var description: String? = nil
     
     public func description(_ description: String) -> Self {
@@ -15,15 +15,30 @@ public class SchemaComponent<RootType : FieldKeyProvider, Context> : Descriptabl
     func update(schema: SchemaThingy) {}
 }
 
+
+
 final class SchemaThingy : TypeProvider {
-    var graphQLTypeMap: [AnyType: GraphQLType] = [
-        AnyType(Int.self): GraphQLInt,
-        AnyType(Double.self): GraphQLFloat,
-        AnyType(String.self): GraphQLString,
-        AnyType(UUID.self): GraphQLString,
-        AnyType(Bool.self): GraphQLBoolean,
-    ]
+    private class _STTypeProvider: TypeProvider {
+        var graphQLTypeMap: [AnyType: GraphQLType] = [
+            AnyType(Bool.self): GraphQLBoolean,
+            AnyType(Double.self): GraphQLFloat,
+            AnyType(Float.self): GraphQLFloat,
+            AnyType(Int.self): GraphQLInt,
+            AnyType(String.self): GraphQLString,
+            AnyType(UUID.self): GraphQLString,
+        ]
+    }
     
+    init(typeProvider: TypeProvider?) {
+        self.underlyingTypeProvider = typeProvider ?? _STTypeProvider()
+    }
+    
+    var graphQLTypeMap: [AnyType : GraphQLType] {
+        get { underlyingTypeProvider.graphQLTypeMap }
+        set { underlyingTypeProvider.graphQLTypeMap = newValue }
+    }
+    
+    var underlyingTypeProvider: TypeProvider
     var query: GraphQLObjectType? = nil
     var mutation: GraphQLObjectType? = nil
     var subscription: GraphQLObjectType? = nil
@@ -99,13 +114,12 @@ private final class MergerSchemaComponent<RootType : FieldKeyProvider, Context> 
 //    }
 //}
 
-
-public class Schema<Root: FieldKeyProvider, Context> {
+public class Schema<Resolver: FieldKeyProvider, Context> {
     public var schema: GraphQLSchema
 
-    public init(_ component: [SchemaComponent<Root, Context>]) {
+    public init(customTypeProvider: TypeProvider? = nil, _ component: [SchemaComponent<Resolver, Context>]) {
         let component = MergerSchemaComponent(components: component)
-        let thingy = SchemaThingy()
+        let thingy = SchemaThingy(typeProvider: customTypeProvider)
         component.update(schema: thingy)
 
         guard let query = thingy.query else {
@@ -125,7 +139,7 @@ public class Schema<Root: FieldKeyProvider, Context> {
 extension Schema {
     public func execute(
         request: String,
-        root: Root,
+        resolver: Resolver,
         context: Context,
         eventLoopGroup: EventLoopGroup,
         variables: [String: Map] = [:],
@@ -135,7 +149,7 @@ extension Schema {
             return try graphql(
                 schema: self.schema,
                 request: request,
-                rootValue: root,
+                rootValue: resolver,
                 context: context,
                 eventLoopGroup: eventLoopGroup,
                 variableValues: variables,

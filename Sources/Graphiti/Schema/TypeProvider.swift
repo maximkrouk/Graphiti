@@ -1,6 +1,6 @@
 import GraphQL
 
-protocol TypeProvider : class {
+public protocol TypeProvider: AnyObject {
     var graphQLTypeMap: [AnyType: GraphQLType] { get set }
 }
 

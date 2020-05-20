@@ -88,7 +88,7 @@ class StarWarsIntrospectionTests : XCTestCase {
 
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -123,7 +123,7 @@ class StarWarsIntrospectionTests : XCTestCase {
 
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -154,7 +154,7 @@ class StarWarsIntrospectionTests : XCTestCase {
 
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -187,7 +187,7 @@ class StarWarsIntrospectionTests : XCTestCase {
 
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -220,7 +220,7 @@ class StarWarsIntrospectionTests : XCTestCase {
 
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -302,7 +302,7 @@ class StarWarsIntrospectionTests : XCTestCase {
 
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -409,7 +409,7 @@ class StarWarsIntrospectionTests : XCTestCase {
 
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -529,7 +529,7 @@ class StarWarsIntrospectionTests : XCTestCase {
 
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -562,7 +562,7 @@ class StarWarsIntrospectionTests : XCTestCase {
 
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()

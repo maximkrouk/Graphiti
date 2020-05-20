@@ -32,7 +32,7 @@ class StarWarsQueryTests : XCTestCase {
         
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -75,7 +75,7 @@ class StarWarsQueryTests : XCTestCase {
 
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -144,7 +144,7 @@ class StarWarsQueryTests : XCTestCase {
 
         let result = try starWarsSchema.execute(
             request: query,
-            root: self.starWarsAPI,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -174,8 +174,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -213,8 +213,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup,
             variables: params
@@ -235,8 +235,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup,
             variables: params
@@ -255,8 +255,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup,
             variables: params
@@ -288,8 +288,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -325,8 +325,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -366,8 +366,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -409,8 +409,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -442,8 +442,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -475,8 +475,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -515,8 +515,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -581,8 +581,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -621,8 +621,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -715,8 +715,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try schema.execute(
-            request: query,
-            root: Root(),
+             request: query,
+            resolver: Root(),
             context: NoContext(),
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -759,8 +759,8 @@ class StarWarsQueryTests : XCTestCase {
         )
 
         let result = try starWarsSchema.execute(
-            request: query,
-            root: self.starWarsAPI,
+             request: query,
+            resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()

@@ -1,18 +1,18 @@
 @_exported import enum GraphQL.Map
 @_exported import enum GraphQL.MapError
 
-final class AnyType : Hashable {
+public final class AnyType : Hashable {
     let type: Any.Type
 
-    init(_ type: Any.Type) {
+    public init(_ type: Any.Type) {
         self.type = type
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(String(describing: type))
     }
 
-    static func == (lhs: AnyType, rhs: AnyType) -> Bool {
+    public static func == (lhs: AnyType, rhs: AnyType) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
 }

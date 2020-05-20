@@ -51,7 +51,7 @@ class HelloWorldTests : XCTestCase {
         
         let result = try schema.execute(
             request: query,
-            root: API(),
+            resolver: API(),
             context: APIContext(),
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -76,7 +76,7 @@ class HelloWorldTests : XCTestCase {
         
         let result = try schema.execute(
             request: query,
-            root: API(),
+            resolver: API(),
             context: APIContext(),
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -104,7 +104,7 @@ class HelloWorldTests : XCTestCase {
 
         let result = try schema.execute(
             request: query,
-            root: API(),
+            resolver: API(),
             context: APIContext(),
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -177,7 +177,7 @@ class HelloWorldTests : XCTestCase {
         
         result = try schema.execute(
             request: query,
-            root: ScalarRoot(),
+            resolver: ScalarRoot(),
             context: NoContext(),
             eventLoopGroup: eventLoopGroup,
             variables: ["float": 4]
@@ -189,7 +189,7 @@ class HelloWorldTests : XCTestCase {
         
         result = try schema.execute(
             request: query,
-            root: ScalarRoot(),
+            resolver: ScalarRoot(),
             context: NoContext(),
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -201,7 +201,7 @@ class HelloWorldTests : XCTestCase {
         
         result = try schema.execute(
             request: query,
-            root: ScalarRoot(),
+            resolver: ScalarRoot(),
             context: NoContext(),
             eventLoopGroup: eventLoopGroup,
             variables: ["id": "85b8d502-8190-40ab-b18f-88edd297d8b6"]
@@ -213,7 +213,7 @@ class HelloWorldTests : XCTestCase {
         
         result = try schema.execute(
             request: query,
-            root: ScalarRoot(),
+            resolver: ScalarRoot(),
             context: NoContext(),
             eventLoopGroup: eventLoopGroup
         ).wait()
@@ -307,7 +307,7 @@ class HelloWorldTests : XCTestCase {
         do {
             let result = try schema.execute(
                 request: mutation,
-                root: FooRoot(),
+                resolver: FooRoot(),
                 context: NoContext(),
                 eventLoopGroup: group,
                 variables: variables
