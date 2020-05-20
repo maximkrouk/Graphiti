@@ -1,4 +1,5 @@
 import GraphQL
+import Foundation
 import NIO
 
 public typealias NoContext = Void
@@ -19,6 +20,7 @@ final class SchemaThingy : TypeProvider {
         AnyType(Int.self): GraphQLInt,
         AnyType(Double.self): GraphQLFloat,
         AnyType(String.self): GraphQLString,
+        AnyType(UUID.self): GraphQLString,
         AnyType(Bool.self): GraphQLBoolean,
     ]
     
