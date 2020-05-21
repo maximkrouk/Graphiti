@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.2
 import PackageDescription
 
 let package = Package(
@@ -7,11 +7,19 @@ let package = Package(
         .library(name: "Graphiti", targets: ["Graphiti"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/maximkrouk/GraphQL.git", .branch("mx")),
+        .package(url: "https://github.com/maximkrouk/GraphQL.git", from: "1.0.0-beta.1.0"),
         .package(url: "https://github.com/wickwirew/Runtime.git", from: "2.1.0")
     ],
     targets: [
-        .target(name: "Graphiti", dependencies: ["GraphQL", "Runtime"]),
-        .testTarget(name: "GraphitiTests", dependencies: ["Graphiti"]),
+        .target(
+            name: "Graphiti",
+            dependencies: [
+                .product(name: "GraphQL", package: "GraphQL"),
+                .product(name: "Runtime", package: "Runtime")
+            ]
+        ),
+        .testTarget(name: "GraphitiTests", dependencies: [
+            .target(name: "Graphiti")
+        ]),
     ]
 )

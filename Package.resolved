@@ -14,9 +14,9 @@
         "package": "GraphQL",
         "repositoryURL": "https://github.com/maximkrouk/GraphQL.git",
         "state": {
-          "branch": "mx",
-          "revision": "177903416e079edacc53f7aebb73dd064467a546",
-          "version": null
+          "branch": null,
+          "revision": "0824bf044c694f8adc6582751a2ad2b0f537dabd",
+          "version": "1.0.0-beta.1.0"
         }
       },
       {
