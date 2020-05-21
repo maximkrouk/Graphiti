@@ -1,6 +1,6 @@
 import GraphQL
 
-public final class Union<Root : FieldKeyProvider, Context, UnionType> : SchemaComponent<Root, Context> {
+public final class QLUnion<Resolver : FieldKeyProvider, Context, UnionType> : QLSchemaComponent<Resolver, Context> {
     private let name: String?
     private let members: [Any.Type]
     

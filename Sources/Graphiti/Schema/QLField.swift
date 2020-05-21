@@ -29,7 +29,13 @@ public typealias AsyncResolve<ObjectType, Context, Arguments, ResolveType> = (
     _ eventLoopGroup: EventLoopGroup
 ) throws -> EventLoopFuture<ResolveType>
 
-public class Field<ObjectType, FieldKey : RawRepresentable, Context, Arguments : Decodable, FieldType, ResolveType> : ObjectTypeComponent<ObjectType, FieldKey, Context>, Descriptable where FieldKey.RawValue == String {
+public class QLField<
+    ObjectType, FieldKey : RawRepresentable,
+    Context,
+    Arguments : Decodable,
+    FieldType,
+    ResolveType
+> : QLObjectTypeComponent<ObjectType, FieldKey, Context>, Descriptable where FieldKey.RawValue == String {
     let name: String
     let resolve: GraphQLFieldResolve
     var description: String? = nil
@@ -37,12 +43,12 @@ public class Field<ObjectType, FieldKey : RawRepresentable, Context, Arguments :
     var argumentsDefaultValues: [String: Map] = [:]
     var deprecationReason: String? = nil
     
-    override func fields(provider: TypeProvider) throws -> GraphQLFieldMap {
+    override func fields(provider: QLTypeProvider) throws -> GraphQLFieldMap {
         let (name, field) = try self.field(provider: provider)
         return [name: field]
     }
     
-    override func field(provider: TypeProvider) throws -> (String, GraphQLField) {
+    override func field(provider: QLTypeProvider) throws -> (String, GraphQLField) {
         let field = GraphQLField(
             type: try provider.getOutputType(from: FieldType.self, field: name),
             description: self.description,
@@ -54,7 +60,7 @@ public class Field<ObjectType, FieldKey : RawRepresentable, Context, Arguments :
         return (name, field)
     }
     
-    func arguments(provider: TypeProvider) throws -> [String: GraphQLArgument] {
+    func arguments(provider: QLTypeProvider) throws -> [String: GraphQLArgument] {
         var arguments: [String: GraphQLArgument] = [:]
         let info = try typeInfo(of: Arguments.self)
         
@@ -100,7 +106,7 @@ public class Field<ObjectType, FieldKey : RawRepresentable, Context, Arguments :
     }
 }
 
-extension Field {
+extension QLField {
     public convenience init(
         name: String,
         at function: @escaping AsyncResolve<ObjectType, Context, Arguments, ResolveType>
@@ -140,7 +146,7 @@ extension Field {
     }
 }
 
-extension Field where FieldType == ResolveType {
+extension QLField where FieldType == ResolveType {
     public convenience init(
         _ name: FieldKey,
         at function: @escaping AsyncResolve<ObjectType, Context, Arguments, ResolveType>
@@ -156,7 +162,7 @@ extension Field where FieldType == ResolveType {
     }
 }
 
-extension Field where Arguments == NoArguments, FieldType == ResolveType {
+extension QLField where Arguments == NoArguments, FieldType == ResolveType {
     public convenience init(
         _ name: FieldKey,
         at keyPath: KeyPath<ObjectType, ResolveType>
@@ -176,7 +182,7 @@ extension Field where Arguments == NoArguments, FieldType == ResolveType {
     }
 }
 
-extension Field where Arguments == NoArguments {
+extension QLField where Arguments == NoArguments {
     public convenience init(
         _ name: FieldKey,
         at function: @escaping AsyncResolve<ObjectType, Context, Arguments, ResolveType>,

@@ -1,16 +1,16 @@
 import GraphQL
 
-public class InputField<InputObjectType, FieldKey : RawRepresentable, Context, FieldType : Encodable> : InputObjectTypeComponent<InputObjectType, FieldKey, Context>, Descriptable where FieldKey.RawValue == String {
+public class QLInputField<InputObjectType, FieldKey : RawRepresentable, Context, FieldType : Encodable> : QLInputObjectTypeComponent<InputObjectType, FieldKey, Context>, Descriptable where FieldKey.RawValue == String {
     let name: String
     let defaultValue: Map?
     var description: String? = nil
     
-    override func fields(provider: TypeProvider) throws -> InputObjectConfigFieldMap {
+    override func fields(provider: QLTypeProvider) throws -> InputObjectConfigFieldMap {
         let (name, field) = try self.field(provider: provider)
         return [name: field]
     }
     
-    override func field(provider: TypeProvider) throws -> (String, InputObjectField) {
+    override func field(provider: QLTypeProvider) throws -> (String, InputObjectField) {
         let field = InputObjectField(
             type: try provider.getInputType(from: FieldType.self, field: self.name),
             defaultValue: self.defaultValue,

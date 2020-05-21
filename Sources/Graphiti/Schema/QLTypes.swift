@@ -1,4 +1,4 @@
-public final class Types<Root : FieldKeyProvider, Context> : SchemaComponent<Root, Context> {
+public final class QLTypes<Resolver : FieldKeyProvider, Context> : QLSchemaComponent<Resolver, Context> {
     let types: [Any.Type]
     
     override func update(schema: SchemaThingy) {

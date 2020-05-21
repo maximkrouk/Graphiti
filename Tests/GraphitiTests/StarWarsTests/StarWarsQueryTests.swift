@@ -675,15 +675,15 @@ class StarWarsQueryTests : XCTestCase {
             }
         }
 
-        let schema = Schema<Root, NoContext>([
-            Type(A.self, fields: [
-                Field(.nullableA, at: A.nullableA, overridingType: (TypeReference<A>?).self),
-                Field(.nonNullA, at: A.nonNullA, overridingType: TypeReference<A>.self),
-                Field(.throws, at: A.throws),
+        let schema = QLSchema<Root, NoContext>([
+            QLType(A.self, fields: [
+                QLField(.nullableA, at: A.nullableA, overridingType: (QLTypeReference<A>?).self),
+                QLField(.nonNullA, at: A.nonNullA, overridingType: QLTypeReference<A>.self),
+                QLField(.throws, at: A.throws),
             ]),
 
-            Query([
-                Field(.nullableA, at: Root.nullableA),
+            QLQuery([
+                QLField(.nullableA, at: Root.nullableA),
             ]),
         ])
 

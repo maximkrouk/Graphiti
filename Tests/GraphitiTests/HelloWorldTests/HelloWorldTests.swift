@@ -27,10 +27,10 @@ class HelloWorldTests : XCTestCase {
         }
     }
     
-    let schema = Schema<API, APIContext>([
-        Query([
-            Field(.hello, at: API.hello),
-            Field(.asyncHello, at: API.asyncHello),
+    let schema = QLSchema<API, APIContext>([
+        QLQuery([
+            QLField(.hello, at: API.hello),
+            QLField(.asyncHello, at: API.asyncHello),
         ])
     ])
 
@@ -157,15 +157,15 @@ class HelloWorldTests : XCTestCase {
             }
         }
 
-        let schema = Schema<ScalarRoot, NoContext>([
-            Scalar(Float.self)
+        let schema = QLSchema<ScalarRoot, NoContext>([
+            QLScalar(Float.self)
             .description("The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point)."),
 
-            Scalar(ID.self),
+            QLScalar(ID.self),
 
-            Query([
-                Field(.float, at: ScalarRoot.float),
-                Field(.id, at: ScalarRoot.id),
+            QLQuery([
+                QLField(.float, at: ScalarRoot.float),
+                QLField(.id, at: ScalarRoot.id),
             ])
         ])
 
@@ -277,23 +277,23 @@ class HelloWorldTests : XCTestCase {
             }
         }
 
-        let schema = Schema<FooRoot, NoContext>([
-            Type(Foo.self, fields: [
-                Graphiti.Field(.id, at: \Foo.id),
-                Graphiti.Field(.name, at: \Foo.name)
+        let schema = QLSchema<FooRoot, NoContext>([
+            QLType(Foo.self, fields: [
+                Graphiti.QLField(.id, at: \Foo.id),
+                Graphiti.QLField(.name, at: \Foo.name)
             ]),
 
-            Query([
-                Field(.foo, at: FooRoot.foo),
+            QLQuery([
+                QLField(.foo, at: FooRoot.foo),
             ]),
 
-            Input(FooInput.self, [
-                InputField(.id, at: \.id),
-                InputField(.name, at: \.name)
+            QLInput(FooInput.self, [
+                QLInputField(.id, at: \.id),
+                QLInputField(.name, at: \.name)
             ]),
 
-            Mutation([
-                Field(.addFoo, at: FooRoot.addFoo),
+            QLMutation([
+                QLField(.addFoo, at: FooRoot.addFoo),
             ]),
         ])
 

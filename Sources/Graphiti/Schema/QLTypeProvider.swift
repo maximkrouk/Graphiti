@@ -1,10 +1,10 @@
 import GraphQL
 
-public protocol TypeProvider: AnyObject {
+public protocol QLTypeProvider: AnyObject {
     var graphQLTypeMap: [AnyType: GraphQLType] { get set }
 }
 
-extension TypeProvider {
+extension QLTypeProvider {
     func map(_ type: Any.Type, to graphQLType: GraphQLType) throws {
         guard !(type is Void.Type) else {
             return
