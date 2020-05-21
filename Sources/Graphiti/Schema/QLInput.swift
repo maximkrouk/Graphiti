@@ -43,7 +43,7 @@ public final class QLInput<Resolver : FieldKeyProvider, Context, InputObjectType
 
     override func update(schema: SchemaThingy) {
         let inputObjectType = try! GraphQLInputObjectType(
-            name: self.name ?? fixName(String(describing: InputObjectType.self)),
+            name: self.name ?? fixedName(for: InputObjectType.self),
             description: self.description,
             fields: self.component.fields(provider: schema)
         )

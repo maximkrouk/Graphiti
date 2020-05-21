@@ -6,7 +6,7 @@ public final class QLInterface<Resolver : FieldKeyProvider, Context, InterfaceTy
 
     override func update(schema: SchemaThingy) {
         let interfaceType = try! GraphQLInterfaceType(
-            name: self.name ?? fixName(String(describing: InterfaceType.self)),
+            name: self.name ?? fixedName(for: InterfaceType.self),
             description: self.description,
             fields: self.component.fields(provider: schema),
             resolveType: nil

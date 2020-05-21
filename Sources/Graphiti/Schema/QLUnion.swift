@@ -6,7 +6,7 @@ public final class QLUnion<Resolver : FieldKeyProvider, Context, UnionType> : QL
     
     override func update(schema: SchemaThingy) {
         let unionType = try! GraphQLUnionType(
-            name: self.name ?? fixName(String(describing: UnionType.self)),
+            name: self.name ?? fixedName(for: UnionType.self),
             description: self.description,
             resolveType: nil,
             types: self.members.map {

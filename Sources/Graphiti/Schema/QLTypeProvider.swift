@@ -42,7 +42,7 @@ extension QLTypeProvider {
                     self.getGraphQLOptionalType(from: GraphQLList($0), isOptional: isOptional)
                 }
             case .reference:
-                let name = fixName(String(describing: type.wrappedType))
+                let name = fixedName(for: type.wrappedType)
                 let referenceType = GraphQLTypeReference(name)
                 
                 return self.getGraphQLOptionalType(from: referenceType, isOptional: isOptional)

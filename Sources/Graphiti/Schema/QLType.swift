@@ -48,7 +48,7 @@ public class QLType<Resolver: FieldKeyProvider, Context, ObjectType: Encodable &
 
     override func update(schema: SchemaThingy) {
         let objectType = try! GraphQLObjectType(
-            name: self.name ?? fixName(String(describing: ObjectType.self)),
+            name: self.name ?? fixedName(for: ObjectType.self),
             description: self.description,
             fields: self.component.fields(provider: schema),
             interfaces: self.interfaces.map {

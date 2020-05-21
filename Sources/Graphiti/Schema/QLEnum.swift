@@ -66,7 +66,7 @@ public final class QLEnum<Resolver : FieldKeyProvider, Context, EnumType : Encod
 
     override func update(schema: SchemaThingy) {
         let enumType = try! GraphQLEnumType(
-            name: self.name ?? fixName(String(describing: EnumType.self)),
+            name: self.name ?? fixedName(for: EnumType.self),
             description: self.description,
             values: self.values
         )

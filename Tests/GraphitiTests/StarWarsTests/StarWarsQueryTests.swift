@@ -747,7 +747,7 @@ class StarWarsQueryTests : XCTestCase {
             "    }" +
             "}"
 
-        let expected = GraphQLResult(
+        var expected = GraphQLResult(
             data: [
                 "search": [
                     [ "name": "Tatooine", "diameter": 10465 ],
@@ -757,15 +757,30 @@ class StarWarsQueryTests : XCTestCase {
                 ],
             ]
         )
+        
+        func sortSearchResultData(_ result: inout GraphQLResult) {
+            let searchResults = result.data!.dictionary!["search"]!.array!.map { $0.dictionary! }
+            result.data = Map([
+                "search": Map(
+                    searchResults.sorted {
+                        $0["name"]!.string! < $1["name"]!.string!
+                    }.map { Map($0) }
+                )
+            ])
+        }
+        
 
-        let result = try starWarsSchema.execute(
+        // Order matters, so
+        var result = try starWarsSchema.execute(
              request: query,
             resolver: self.starWarsAPI,
             context: self.starWarsStore,
             eventLoopGroup: eventLoopGroup
         ).wait()
         
-        // May fail due to the order of response objects, but actually will work as expected
+        sortSearchResultData(&result)
+        sortSearchResultData(&expected)
+        
         XCTAssertEqual(result, expected)
     }
 }

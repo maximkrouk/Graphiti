@@ -277,7 +277,7 @@ class HelloWorldTests : XCTestCase {
             }
         }
 
-        let schema = QLSchema<FooRoot, NoContext>([
+        let generatedSchema = QLSchema<FooRoot, NoContext>([
             QLType(Foo.self, fields: [
                 Graphiti.QLField(.id, at: \Foo.id),
                 Graphiti.QLField(.name, at: \Foo.name)
@@ -297,23 +297,65 @@ class HelloWorldTests : XCTestCase {
             ]),
         ])
 
-        let mutation = "mutation addFoo($input: FooInput!) { addFoo(input:$input) { id, name } }"
-        let variables: [String: Map] = ["input" : [ "id" : "123", "name" : "bob" ]]
+        let mutationForGen = "mutation addFoo($input: HelloWorldTests_LocalContext_FooInput!) { addFoo(input:$input) { id, name } }"
+        let variablesForGen: [String: Map] = ["input" : [ "id" : "123", "name" : "bob" ]]
         
-        let expected = GraphQLResult(
+        let expectedForGen = GraphQLResult(
             data: ["addFoo" : [ "id" : "123", "name" : "bob" ]]
         )
         
         do {
-            let result = try schema.execute(
-                request: mutation,
+            let result = try generatedSchema.execute(
+                request: mutationForGen,
                 resolver: FooRoot(),
                 context: NoContext(),
                 eventLoopGroup: group,
-                variables: variables
+                variables: variablesForGen
             ).wait()
             
-            XCTAssertEqual(result, expected)
+            XCTAssertEqual(result, expectedForGen)
+            debugPrint(result)
+        } catch {
+            debugPrint(error)
+        }
+        
+        let customSchema = QLSchema<FooRoot, NoContext>([
+            QLType(Foo.self, fields: [
+                Graphiti.QLField(.id, at: \Foo.id),
+                Graphiti.QLField(.name, at: \Foo.name)
+            ]),
+
+            QLQuery([
+                QLField(.foo, at: FooRoot.foo),
+            ]),
+
+            QLInput(FooInput.self, name: "FooInput", [
+                QLInputField(.id, at: \.id),
+                QLInputField(.name, at: \.name)
+            ]),
+
+            QLMutation([
+                QLField(.addFoo, at: FooRoot.addFoo),
+            ]),
+        ])
+        
+        let mutationForCustom = "mutation addFoo($input: FooInput!) { addFoo(input:$input) { id, name } }"
+        let variablesForCustom: [String: Map] = ["input" : [ "id" : "123", "name" : "bob" ]]
+        
+        let expectedForCustom = GraphQLResult(
+            data: ["addFoo" : [ "id" : "123", "name" : "bob" ]]
+        )
+        
+        do {
+            let result = try customSchema.execute(
+                request: mutationForCustom,
+                resolver: FooRoot(),
+                context: NoContext(),
+                eventLoopGroup: group,
+                variables: variablesForCustom
+            ).wait()
+            
+            XCTAssertEqual(result, expectedForCustom)
             debugPrint(result)
         } catch {
             debugPrint(error)

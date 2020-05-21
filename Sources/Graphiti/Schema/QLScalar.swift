@@ -56,7 +56,7 @@ public final class QLScalar<Resolver : FieldKeyProvider, Context, ScalarType : C
     
     override func update(schema: SchemaThingy) {
         let scalarType = try! GraphQLScalarType(
-            name: self.name ?? fixName(String(describing: ScalarType.self)),
+            name: self.name ?? fixedName(for: ScalarType.self),
             serialize: { value in
                 guard let v = value as? ScalarType else {
                     throw GraphQLError(message: "Serialize expected type \(ScalarType.self) but got \(type(of: value))")
