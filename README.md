@@ -2,39 +2,36 @@
 
 Graphiti is a Swift library for building GraphQL schemas/types fast, safely and easily.
 
-[![Swift](https://img.shields.io/badge/Swift-5.1-orange.svg?style=flat)](https://swift.org)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://tldrlegal.com/license/mit-license)
-[![Slack](https://zewo-slackin.herokuapp.com/badge.svg)](http://slack.zewo.io)
-[![build](https://github.com/alexsteinerde/Graphiti/workflows/build/badge.svg)](https://github.com/alexsteinerde/Graphiti/actions)
-[![Codecov](https://codecov.io/gh/GraphQLSwift/Graphiti/branch/master/graph/badge.svg)](https://codecov.io/gh/GraphQLSwift/Graphiti)
-[![Codebeat](https://codebeat.co/badges/df113480-6e62-43e0-8c9d-4571c4307e19)](https://codebeat.co/projects/github-com-graphqlswift-graphiti)
+[![Swift](https://img.shields.io/badge/Swift-5.1-orange.svg?style=flat)](https://swift.org) ![Build](https://github.com/maximkrouk/Graphiti/workflows/Build/badge.svg) [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)](https://tldrlegal.com/license/mit-license)
 
 Looking for help? Find resources [from the community](http://graphql.org/community/) or in the [Vapor Discord GraphQL channel](http://vapor.team).
 
-> Function Builders are still in a private state (https://twitter.com/dgregor79/status/1216137755102568448?s=20). As long as they don't work properly a workaround with arrays is implemented. When Function Builders become available in a stable way this package will implement them again!
+> Function Builders are still in a private state (https://twitter.com/dgregor79/status/1216137755102568448?s=20). They are available from this package, but there is no guarantee that they will work as expected.
 
 
 ## Getting Started
 
 An overview of GraphQL in general is available in the
-[README](https://github.com/facebook/graphql/blob/master/README.md) for the
-[Specification for GraphQL](https://github.com/facebook/graphql). That overview
+[README](https://github.com/facebook/graphql/blob/master/README.md) for the [Specification for GraphQL](https://github.com/facebook/graphql). That overview
 describes a simple set of GraphQL examples that exist as [tests](Tests/GraphitiTests/StarWarsTests/)
 in this repository. A good way to get started with this repository is to walk
 through that README and the corresponding tests in parallel.
 
-### Using Graphiti
+### Installation
 
-Add Graphiti to your `Package.swift`
+Add the package to Your SwiftPM package dependencies:
 
 ```swift
-import PackageDescription
-
-let package = Package(
-    dependencies: [
-        .package(url: "https://github.com/alexsteinerde/Graphiti.git", from: "0.12.0"),
-    ]
+.package(
+    url: "https://github.com/maximkrouk/Graphiti.git", 
+    from: "1.0.0-beta.1.0"
 )
+```
+
+then add `GraphQL` dependency to your target:
+
+```swift
+.product(name: "Graphiti", package: "Graphiti")
 ```
 
 Graphiti provides two important capabilities: building a type schema, and
@@ -441,93 +438,93 @@ import Graphiti
 // Here we're defining our root type StarWarsAPI and the context
 // StarWarsStore as the generic parameters of Schema.
 let starWarsSchema = Schema<StarWarsAPI, StarWarsStore>([
-    Enum(Episode.self, [
-        Value(.newHope)
+    QLEnum(Episode.self, [
+        QLValue(.newHope)
         .description("Released in 1977."),
 
-        Value(.empire)
+        QLValue(.empire)
         .description("Released in 1980."),
 
-        Value(.jedi)
+        QLValue(.jedi)
         .description("Released in 1983."),
     ])
     .description("One of the films in the Star Wars Trilogy."),
 
-    Interface(Character.self, fieldKeys: CharacterFieldKeys.self, [
-        Field(.id, at: \.id)
+    QLInterface(Character.self, fieldKeys: CharacterFieldKeys.self, [
+        QLField(.id, at: \.id)
         .description("The id of the character."),
 
-        Field(.name, at: \.name)
+        QLField(.name, at: \.name)
         .description("The name of the character."),
 
-        Field(.friends, at: \.friends, overridingType: [TypeReference<Character>].self)
+        QLField(.friends, at: \.friends, overridingType: [TypeReference<Character>].self)
         .description("The friends of the character, or an empty list if they have none."),
 
-        Field(.appearsIn, at: \.appearsIn)
+        QLField(.appearsIn, at: \.appearsIn)
         .description("Which movies they appear in."),
 
-        Field(.secretBackstory, at: \.secretBackstory)
+        QLField(.secretBackstory, at: \.secretBackstory)
         .description("All secrets about their past."),
     ])
     .description("A character in the Star Wars Trilogy."),
 
-    Type(Planet.self, fields: [
-        Field(.id, at: \.id),
-        Field(.name, at: \.name),
-        Field(.diameter, at: \.diameter),
-        Field(.rotationPeriod, at: \.rotationPeriod),
-        Field(.orbitalPeriod, at: \.orbitalPeriod),
-        Field(.residents, at: \.residents, overridingType: [TypeReference<Human>].self),
+    QLType(Planet.self, fields: [
+        QLField(.id, at: \.id),
+        QLField(.name, at: \.name),
+        QLField(.diameter, at: \.diameter),
+        QLField(.rotationPeriod, at: \.rotationPeriod),
+        QLField(.orbitalPeriod, at: \.orbitalPeriod),
+        QLField(.residents, at: \.residents, overridingType: [TypeReference<Human>].self),
     ])
     .description("A large mass, planet or planetoid in the Star Wars Universe, at the time of 0 ABY."),
 
 
-    Type(Human.self, interfaces: Character.self, fields: [
-        Field(.id, at: \.id),
-        Field(.name, at: \.name),
-        Field(.appearsIn, at: \.appearsIn),
-        Field(.homePlanet, at: \.homePlanet),
+    QLType(Human.self, interfaces: Character.self, fields: [
+        QLField(.id, at: \.id),
+        QLField(.name, at: \.name),
+        QLField(.appearsIn, at: \.appearsIn),
+        QLField(.homePlanet, at: \.homePlanet),
 
-        Field(.friends, at: Human.getFriends)
+        QLField(.friends, at: Human.getFriends)
         .description("The friends of the human, or an empty list if they have none."),
 
-        Field(.secretBackstory, at: Human.getSecretBackstory)
+        QLField(.secretBackstory, at: Human.getSecretBackstory)
         .description("Where are they from and how they came to be who they are."),
     ])
     .description("A humanoid creature in the Star Wars universe."),
 
-    Type(Droid.self, interfaces: Character.self, fields: [
-        Field(.id, at: \.id),
-        Field(.name, at: \.name),
-        Field(.appearsIn, at: \.appearsIn),
-        Field(.primaryFunction, at: \.primaryFunction),
+    QLType(Droid.self, interfaces: Character.self, fields: [
+        QLField(.id, at: \.id),
+        QLField(.name, at: \.name),
+        QLField(.appearsIn, at: \.appearsIn),
+        QLField(.primaryFunction, at: \.primaryFunction),
 
-        Field(.friends, at: Droid.getFriends)
+        QLField(.friends, at: Droid.getFriends)
         .description("The friends of the droid, or an empty list if they have none."),
 
-        Field(.secretBackstory, at: Droid.getSecretBackstory)
+        QLField(.secretBackstory, at: Droid.getSecretBackstory)
         .description("Where are they from and how they came to be who they are."),
     ])
     .description("A mechanical creature in the Star Wars universe."),
 
-    Union(SearchResult.self, members: Planet.self, Human.self, Droid.self),
+    QLUnion(SearchResult.self, members: Planet.self, Human.self, Droid.self),
 
     Query([
-        Field(.hero, at: StarWarsAPI.getHero)
+        QLField(.hero, at: StarWarsAPI.getHero)
         .description("Returns a hero based on the given episode.")
         .argument(.episode, at: \.episode, description: "If omitted, returns the hero of the whole saga. If provided, returns the hero of that particular episode."),
 
-        Field(.human, at: StarWarsAPI.getHuman)
+        QLField(.human, at: StarWarsAPI.getHuman)
         .argument(.id, at: \.id, description: "Id of the human."),
 
-        Field(.droid, at: StarWarsAPI.getDroid)
+        QLField(.droid, at: StarWarsAPI.getDroid)
         .argument(.id, at: \.id, description: "Id of the droid."),
 
-        Field(.search, at: StarWarsAPI.search)
+        QLField(.search, at: StarWarsAPI.search)
         .argument(.query, at: \.query, defaultValue: "R2-D2"),
     ]),
 
-    Types(Human.self, Droid.self),
+    QLTypes(Human.self, Droid.self),
 ])
 ```
 
@@ -554,7 +551,7 @@ query HeroNameQuery {
  
 let result = try starWarsSchema.execute(
     request: query,
-    root: self.starWarsAPI,
+    resolver: self.starWarsAPI,
     context: self.starWarsStore,
     eventLoopGroup: eventLoopGroup
 ).wait()
@@ -577,10 +574,10 @@ To use async resolvers, just add one more parameter with type `EventLoopGroup` t
 ```swift
 import NIO
 
-struct API : FieldKeyProvider {
+struct API: FieldKeyProvider {
     typealias FieldKey = FieldKeys
     
-    enum FieldKeys : String {
+    enum FieldKeys: String {
         case hello
     }
     
@@ -593,6 +590,8 @@ struct API : FieldKeyProvider {
     }
 }
 ```
+
+
 
 ## License
 
